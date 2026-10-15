@@ -265,77 +265,14 @@ const HelpSupport = () => {
             </div>
 
             {/* Support Team */}
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Our Team</h2>
-              <div className="space-y-4">
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-gray-50/80 to-gray-100/50 dark:from-[#070707]/50 dark:to-[#070707]/70 border border-gray-200 dark:border-white/10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
-                      AS
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900 dark:text-white text-lg">Anugrah Singh</p>
-                      <p className="text-gray-600 dark:text-[#a0a0a0]">Frontend Developer</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <p className="flex items-center gap-2 text-gray-600 dark:text-[#a0a0a0]">
-                      <Mail className="w-4 h-4" />
-                      anugrah.singh@campusconnect.edu
-                    </p>
-                    <p className="flex items-center gap-2 text-gray-600 dark:text-[#a0a0a0]">
-                      <GraduationCap className="w-4 h-4" />
-                      LinkedIn: /in/anugrah-singh
-                    </p>
-                  </div>
-                </div>
 
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-gray-50/80 to-gray-100/50 dark:from-[#070707]/50 dark:to-[#070707]/70 border border-gray-200 dark:border-white/10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
-                      VS
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900 dark:text-white text-lg">Vaibhav Sinha</p>
-                      <p className="text-gray-600 dark:text-[#a0a0a0]">Backend Developer</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <p className="flex items-center gap-2 text-gray-600 dark:text-[#a0a0a0]">
-                      <Mail className="w-4 h-4" />
-                      vaibhav.sinha@campusconnect.edu
-                    </p>
-                    <p className="flex items-center gap-2 text-gray-600 dark:text-[#a0a0a0]">
-                      <GraduationCap className="w-4 h-4" />
-                      LinkedIn: /in/vaibhav-sinha
-                    </p>
-                  </div>
-                </div>
+              
+             
 
-               <div className="p-6 rounded-2xl bg-gradient-to-br from-gray-50/80 to-gray-100/50 dark:from-[#070707]/50 dark:to-[#070707]/70 border border-gray-200 dark:border-white/10">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
-                      SJ
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-900 dark:text-white text-lg">Sumit Joshi</p>
-                      <p className="text-gray-600 dark:text-[#a0a0a0]">Backend Developer</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <p className="flex items-center gap-2 text-gray-600 dark:text-[#a0a0a0]">
-                      <Mail className="w-4 h-4" />
-                      sumit.joshi@campusconnect.edu
-                    </p>
-                    <p className="flex items-center gap-2 text-gray-600 dark:text-[#a0a0a0]">
-                      <GraduationCap className="w-4 h-4" />
-                      LinkedIn: /in/sumit-joshi
-                    </p>
-                  </div>
-                </div>
+                
               </div>
-            </div>
-          </div>
+            
+        
         )}
 
         {activeTab === "faqs" && (

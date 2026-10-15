@@ -1,3 +1,7 @@
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
+
+
 const ImageKit = require("imagekit");
 
 const imagekit = new ImageKit({
