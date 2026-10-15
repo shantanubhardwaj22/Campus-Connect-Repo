@@ -34,7 +34,7 @@ const generalLimiter = rateLimit({
 const allowedOrigins = [
   "http://localhost:5173",
   "https://campus-connect-repo.vercel.app",
-  "https://campus-connect-repo-ld9ypomn1-shantanubhardwaj22s-projects.vercel.app",
+
 ];
 
 const io = new Server(server, {
