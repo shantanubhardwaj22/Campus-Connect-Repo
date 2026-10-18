@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const SearchPage = () => {
   const { user } = useUser();
@@ -54,7 +55,7 @@ const SearchPage = () => {
     setIsLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/searchUser`,
+        `${BACKEND_URL}/api/user/searchUser`,
         {
           params: {
             query: query,

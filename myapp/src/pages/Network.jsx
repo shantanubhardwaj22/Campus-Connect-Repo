@@ -26,6 +26,7 @@ import {
   School,
   User,
 } from "lucide-react";
+import { BACKEND_URL } from "../config";
 
 const Network = () => {
   const { user } = useUser();
@@ -81,7 +82,7 @@ const Network = () => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`,
+        `${BACKEND_URL}/api/user/profile/${user.id}`,
       );
       setUserProfile(response.data);
     } catch (error) {
@@ -174,7 +175,7 @@ const Network = () => {
       setIsLoading(true);
       const res = await axios.get(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/post/getAll-post?page=${pageNum}`,
       );
       const newPost = res.data.post;
@@ -200,7 +201,7 @@ const Network = () => {
   const fetchProjects = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/project/get-projects`,
+        `${BACKEND_URL}/api/project/get-projects`,
       );
       const data = res.data;
       setProjects(data);

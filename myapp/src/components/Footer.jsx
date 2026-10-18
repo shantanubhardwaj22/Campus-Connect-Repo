@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 const Footer = () => {
   const { user } = useUser();
@@ -24,7 +25,7 @@ const Footer = () => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+        `${BACKEND_URL}/api/user/profile/${user.id}`
       );
       const data = response.data;
       setCurrentUserRole(data?.role);

@@ -21,6 +21,7 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 
 const CompleteYourProfile = () => {
@@ -82,7 +83,7 @@ const CompleteYourProfile = () => {
     if (!user?.id) return;
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`,
+        `${BACKEND_URL}/api/user/profile/${user.id}`,
       );
       const data = response.data;
       setEnrollmentNumber(data.enrollmentNumber || "");
@@ -141,7 +142,7 @@ const CompleteYourProfile = () => {
         formData.append("idCardPhoto", idCardPhoto);
 
       await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/upload-profile`,
+        `${BACKEND_URL}/api/user/upload-profile`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -32,6 +32,7 @@ import { format } from "date-fns";
 import { ModalWindow } from "../components/ModalWindow";
 import { FacultyRoleModal } from "../components/FacultyRoleModal";
 import ConnectionRequestsModal from "../components/ConnectionRequestsModal";
+import { BACKEND_URL } from "../config";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Account = () => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+        `${BACKEND_URL}/api/user/profile/${user.id}`
       );
       setMainUser(response.data);
     } catch (error) {
@@ -63,7 +64,7 @@ const Account = () => {
   const handleReject = async (reqId) => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/connectionsRejected/${
+        `${BACKEND_URL}/api/user/connectionsRejected/${
           mainUser._id
         }`,
         { senderId: reqId }
@@ -78,7 +79,7 @@ const Account = () => {
   const handleAccept = async (reqId) => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/connectionsAccepted/${
+        `${BACKEND_URL}/api/user/connectionsAccepted/${
           mainUser._id
         }`,
         { senderId: reqId }

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowLeft } from "lucide-react";
+import { BACKEND_URL } from "../config";
 
 const UserProfile = () => {
   const { user } = useUser();
@@ -55,7 +56,7 @@ const UserProfile = () => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+        `${BACKEND_URL}/api/user/profile/${user.id}`
       );
       const data = response.data;
       setUser2(data);
@@ -92,7 +93,7 @@ const UserProfile = () => {
 
       // Make API call
       await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/upload-profile`,
+        `${BACKEND_URL}/api/user/upload-profile`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

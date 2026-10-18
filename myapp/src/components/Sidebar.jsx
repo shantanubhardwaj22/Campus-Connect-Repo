@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { ModalWindow } from "./ModalWindow";
+import { BACKEND_URL } from "../config";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+        `${BACKEND_URL}/api/user/profile/${user.id}`
       );
       const data = response.data;
       setMainUser(data);
@@ -49,7 +50,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const handleReject = async (reqId) => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/connectionsRejected/${
+        `${BACKEND_URL}/api/user/connectionsRejected/${
           mainUser._id
         }`,
         { senderId: reqId }
@@ -66,7 +67,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const handleAccept = async (reqId) => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/connectionsAccepted/${
+        `${BACKEND_URL}/api/user/connectionsAccepted/${
           mainUser._id
         }`,
         { senderId: reqId }
@@ -83,7 +84,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const handleClick = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/getPendingConnections/${
+        `${BACKEND_URL}/api/user/getPendingConnections/${
           mainUser._id
         }`
       );

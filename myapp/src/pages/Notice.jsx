@@ -5,6 +5,7 @@ import axios from "axios";
 import { format, parseISO } from "date-fns";
 import { Bell, Loader2 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const Notice = () => {
   const [notices, setNotices] = useState([]);
@@ -22,7 +23,7 @@ const Notice = () => {
     try {
       const res = await axios.get(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/admin-post/get-post?page=${pageNum}&category=Notice`,
       );
       const newPost = res.data.post;

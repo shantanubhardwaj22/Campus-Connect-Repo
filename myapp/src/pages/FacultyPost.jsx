@@ -17,6 +17,7 @@ import { useUser } from "@clerk/clerk-react";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const FacultyPost = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const FacultyPost = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`,
+        `${BACKEND_URL}/api/user/profile/${user.id}`,
       );
       const data = response.data;
       const form = new FormData();
@@ -67,7 +68,7 @@ const FacultyPost = () => {
       }
 
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin-post/create-post`,
+        `${BACKEND_URL}/api/admin-post/create-post`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },

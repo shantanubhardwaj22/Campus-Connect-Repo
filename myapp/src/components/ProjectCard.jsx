@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 import { useUser } from "@clerk/clerk-react";
 import CommentProject from "./CommentProject";
 import { useNavigate } from "react-router";
+import { BACKEND_URL } from "../config";
 
 const ProjectCard = ({
   avatar,
@@ -65,7 +66,7 @@ const ProjectCard = ({
   const fetchLikes = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/project/like/${projectId}`
+        `${BACKEND_URL}/api/project/like/${projectId}`
       );
       const likedUsers = response.data.likes;
       setLikedByCurrentUser(
@@ -79,7 +80,7 @@ const ProjectCard = ({
   const fetchUser = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${clerkUser.id}`
+        `${BACKEND_URL}/api/user/profile/${clerkUser.id}`
       );
       setUser(response.data);
     } catch (error) {
@@ -95,7 +96,7 @@ const ProjectCard = ({
     setLikesCount((prev) => prev + (newLikedState ? 1 : -1));
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/project/like/${projectId}`,
+        `${BACKEND_URL}/api/project/like/${projectId}`,
         {
           userId: user?._id,
         }
@@ -124,7 +125,7 @@ const ProjectCard = ({
       formData.append("projectId", projectId);
       formData.append("userId", user?._id);
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/project/create-project-comment`,
+        `${BACKEND_URL}/api/project/create-project-comment`,
         formData,
         {
           headers: { "Content-Type": "application/json" },

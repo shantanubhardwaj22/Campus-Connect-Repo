@@ -14,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ConnectionRequestsModal from "../components/ConnectionRequestsModal";
+import { BACKEND_URL } from "../config";
 
 // Theme colors (from theme.txt)
 const CC_YELLOW = "#ece239";
@@ -130,7 +131,7 @@ const ChatApp = () => {
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${clerkUser.id}`
+        `${BACKEND_URL}/api/user/profile/${clerkUser.id}`
       );
       setUser(res.data);
       await fetchAllUsers(res.data._id);
@@ -146,7 +147,7 @@ const ChatApp = () => {
     try {
       const res = await axios.get(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/user/getAllConnections/${currentUserId}`
       );
       setUsers(res.data);
@@ -159,7 +160,7 @@ const ChatApp = () => {
     try {
       const res = await axios.get(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/user/getPendingConnections/${userId}`
       );
       setPendingCount(res.data.length || 0);

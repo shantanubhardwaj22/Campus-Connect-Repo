@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router";
+import { BACKEND_URL } from "../config";
 
 const PostCard = ({
   avatar,
@@ -53,7 +54,7 @@ const PostCard = ({
       if (!currUserId) return;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/post/like/${postId}`,
+          `${BACKEND_URL}/api/post/like/${postId}`,
         );
         const likedUsers = response.data.likedByUsers;
         setLikedByCurrentUser(likedUsers.some((user) => user === currUserId));
@@ -70,7 +71,7 @@ const PostCard = ({
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`,
+        `${BACKEND_URL}/api/user/profile/${user.id}`,
       );
       const data = response.data;
       setCurrUserId(data._id);
@@ -90,7 +91,7 @@ const PostCard = ({
     try {
       const response = await axios.patch(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/post/like/${postId}/like-toggle`,
         { userId: currUserId },
       );
@@ -114,7 +115,7 @@ const PostCard = ({
       formData.append("postId", postId);
       formData.append("userId", currUserId);
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/create-comment`,
+        `${BACKEND_URL}/api/post/create-comment`,
         formData,
         {
           headers: { "Content-Type": "application/json" },

@@ -14,6 +14,7 @@ import {
   UserCheck,
   Shield,
 } from "lucide-react";
+import { BACKEND_URL } from "../config";
 
 function FacultyRole() {
   const [collegeId, setCollegeId] = useState("");
@@ -36,7 +37,7 @@ function FacultyRole() {
   const fetchUserProfile = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+        `${BACKEND_URL}/api/user/profile/${user.id}`
       );
       const data = response.data;
       setCollegeId(data?.collegeId);
@@ -62,7 +63,7 @@ function FacultyRole() {
       }
 
       await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/upload-profile`,
+        `${BACKEND_URL}/api/user/upload-profile`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

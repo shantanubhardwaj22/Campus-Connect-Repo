@@ -4,6 +4,7 @@ import { FaSearch, FaComments, FaUser } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
+import { BACKEND_URL } from "../config";
 const Navbar = () => {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Navbar = () => {
     }
     // Perform search logic here, e.g., API call to fetch search results
     const res = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/api/user/searchUser`,
+      `${BACKEND_URL}/api/user/searchUser`,
       {
         params: {
           query: searchQuery,

@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { Heart, MessageCircle, User, Clock } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
+import { BACKEND_URL } from "../config";
 
 function Comments({ postId }) {
   const { user } = useUser();
@@ -13,7 +14,7 @@ function Comments({ postId }) {
     const fetchComments = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/post/get-comments/${postId}`
+          `${BACKEND_URL}/api/post/get-comments/${postId}`
         );
         setComments(response.data.comments);
       } catch (error) {

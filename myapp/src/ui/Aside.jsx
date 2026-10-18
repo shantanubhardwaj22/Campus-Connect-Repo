@@ -13,6 +13,7 @@ import { MdManageAccounts } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 const Aside = () => {
   const [expanded, setExpanded] = useState(null);
   const [screenSize, setScreenSize] = useState("desktop");
@@ -75,7 +76,7 @@ const Aside = () => {
     if (!user) return;
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+        `${BACKEND_URL}/api/user/profile/${user.id}`
       );
       const data = response.data;
       setMainUser(data);

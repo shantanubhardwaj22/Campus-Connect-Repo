@@ -20,6 +20,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useUser } from "@clerk/clerk-react";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 function NetworkProfile() {
   const navigate = useNavigate();
@@ -83,18 +84,18 @@ function NetworkProfile() {
       const [userResponse, postResponse, userAuthResponse, projectResponse] =
         await Promise.all([
           axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/user/profileById/${userId}`
+            `${BACKEND_URL}/api/user/profileById/${userId}`
           ),
           axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/user/posts/${userId}`
+            `${BACKEND_URL}/api/user/posts/${userId}`
           ),
           axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${
+            `${BACKEND_URL}/api/user/profile/${
               clerkUser.id
             }`
           ),
           axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/api/project/get-project/${userId}`
+            `${BACKEND_URL}/api/project/get-project/${userId}`
           ),
         ]);
       const data = userResponse.data;
@@ -130,7 +131,7 @@ function NetworkProfile() {
   const handleDeletePost = async (postId) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/post/delete-post/${postId}`, {
+        await axios.delete(`${BACKEND_URL}/api/post/delete-post/${postId}`, {
           data: { author: currUserId }
         });
         // Update local state to remove the deleted post
@@ -146,7 +147,7 @@ function NetworkProfile() {
   const handleDeleteProject = async (projectId) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/project/delete-project/${projectId}`, {
+        await axios.delete(`${BACKEND_URL}/api/project/delete-project/${projectId}`, {
           data: { userId: currUserId }
         });
         // Update local state to remove the deleted project
@@ -169,7 +170,7 @@ function NetworkProfile() {
         formData.append('file', newPostMedia);
       }
       
-      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/post/update-post/${editingPost._id}`, formData, {
+      await axios.patch(`${BACKEND_URL}/api/post/update-post/${editingPost._id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -209,7 +210,7 @@ function NetworkProfile() {
         formData.append('image', newProjectMedia);
       }
       
-      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/project/update-project/${editingProject._id}`, formData, {
+      await axios.patch(`${BACKEND_URL}/api/project/update-project/${editingProject._id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -250,7 +251,7 @@ function NetworkProfile() {
     const fetchLikes = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/post/like/${
+          `${BACKEND_URL}/api/post/like/${
             selectedPost._id
           }`
         );
@@ -271,7 +272,7 @@ function NetworkProfile() {
       try {
         const response = await axios.get(
           `${
-            import.meta.env.VITE_BACKEND_URL
+            BACKEND_URL
           }/api/user/isPending/${currUserId}?receiverId=${user._id}`
         );
         setCategory(response.data?.category);
@@ -289,7 +290,7 @@ function NetworkProfile() {
     try {
       const res = await axios.patch(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/user/updateConnectionsPending/${currUserId}`,
         {
           receiverId: user._id,
@@ -318,7 +319,7 @@ function NetworkProfile() {
   const handleLike = async () => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/like/${
+        `${BACKEND_URL}/api/post/like/${
           selectedPost._id
         }/like-toggle`,
         { userId: currUserId }
@@ -349,8 +350,8 @@ function NetworkProfile() {
       formData.append("postId", selectedPost._id);
       formData.append("userId", currUserId);
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/create-comment`,
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/create-comment`,
+        `${BACKEND_URL}/api/post/create-comment`,
+        `${BACKEND_URL}/api/post/create-comment`,
         formData,
         {
           headers: { "Content-Type": "application/json" },

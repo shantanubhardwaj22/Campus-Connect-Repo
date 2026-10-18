@@ -10,6 +10,7 @@ import {
   Clock,
   Code,
 } from "lucide-react";
+import { BACKEND_URL } from "../config";
 
 function CommentProject({ projectId }) {
   const [comments, setComments] = useState([]);
@@ -21,7 +22,7 @@ function CommentProject({ projectId }) {
       try {
         const response = await axios.get(
           `${
-            import.meta.env.VITE_BACKEND_URL
+            BACKEND_URL
           }/api/project/get-project-comments/${projectId}`
         );
         const fetchedProjectComments = response.data.comments;

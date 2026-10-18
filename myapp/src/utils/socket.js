@@ -1,3 +1,4 @@
 import { io } from "socket.io-client";
-const socket = io(`${import.meta.env.VITE_BACKEND_URL}`);
+import { BACKEND_URL } from "../config";
+const socket = io(`${BACKEND_URL}`);
 export default socket;

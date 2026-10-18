@@ -20,6 +20,7 @@ import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const PostProject = () => {
   const navigate = useNavigate();
@@ -147,7 +148,7 @@ const PostProject = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`,
+        `${BACKEND_URL}/api/user/profile/${user.id}`,
       );
       const data = response.data;
       const userId = data._id;
@@ -165,7 +166,7 @@ const PostProject = () => {
       formData.skills.forEach((skill) => form.append("TechStack", skill));
       form.append("userId", userId);
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/project/create-project`,
+        `${BACKEND_URL}/api/project/create-project`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },

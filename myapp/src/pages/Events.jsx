@@ -3,6 +3,7 @@ import EventCard from "../components/EventCard";
 import { Loader2, X, Calendar, Sparkles } from "lucide-react";
 import axios from "axios";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -45,7 +46,7 @@ const Events = () => {
     try {
       const response = await axios.get(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/admin-post/get-post?page=${currentPage}&category=Event`,
       );
       const newEvents = response.data.post;

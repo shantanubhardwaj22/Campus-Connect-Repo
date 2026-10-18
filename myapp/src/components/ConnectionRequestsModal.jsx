@@ -3,6 +3,7 @@ import axios from "axios";
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { Bell, Check, X, User, Loader2 } from "lucide-react";
 import { ModalWindow } from "./ModalWindow";
+import { BACKEND_URL } from "../config";
 
 const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
   const [requests, setRequests] = useState([]);
@@ -20,7 +21,7 @@ const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
     try {
       const response = await axios.get(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/user/getPendingConnections/${userId}`
       );
       setRequests(response.data);
@@ -35,7 +36,7 @@ const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
     try {
       const response = await axios.patch(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/user/connectionsRejected/${userId}`,
         { senderId: reqId }
       );
@@ -50,7 +51,7 @@ const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
     try {
       const response = await axios.patch(
         `${
-          import.meta.env.VITE_BACKEND_URL
+          BACKEND_URL
         }/api/user/connectionsAccepted/${userId}`,
         { senderId: reqId }
       );

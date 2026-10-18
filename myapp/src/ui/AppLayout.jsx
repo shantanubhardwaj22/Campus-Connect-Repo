@@ -4,6 +4,7 @@ import { useUser } from "@clerk/clerk-react";
 import Aside from "./Aside";
 import { AiOutlineMessage } from "react-icons/ai";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const AppLayout = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`
+          `${BACKEND_URL}/api/user/profile/${user.id}`
         );
         const userData = await response.json();
       } catch (error) {

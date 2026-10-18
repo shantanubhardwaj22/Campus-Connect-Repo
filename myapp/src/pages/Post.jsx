@@ -20,6 +20,7 @@ import axios from "axios";
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { useUser } from "@clerk/clerk-react";
 import { useTheme } from "../context/ThemeContext";
+import { BACKEND_URL } from "../config";
 
 const PostPage = () => {
   const { user } = useUser();
@@ -110,7 +111,7 @@ const PostPage = () => {
     setIsSubmitting(true);
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/user/profile/${user.id}`,
+        `${BACKEND_URL}/api/user/profile/${user.id}`,
       );
 
       const data = response.data;
@@ -120,7 +121,7 @@ const PostPage = () => {
       form.append("author", data._id);
 
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/post/create-post`,
+        `${BACKEND_URL}/api/post/create-post`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },
