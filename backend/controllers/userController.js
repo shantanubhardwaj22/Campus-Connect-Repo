@@ -77,7 +77,11 @@ const getUserProfile = async (req, res) => {
     const { clerkId } = req.params;
 
     // Fetch user from DB using Clerk ID
-    const user = await User.findOne({ clerkId });
+    console.log("Fetching profile for Clerk ID:", clerkId);
+
+const user = await User.findOne({ clerkId });
+
+console.log("User found:", !!user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
