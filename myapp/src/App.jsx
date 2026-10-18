@@ -67,7 +67,11 @@ function App() {
   }
 
   return (
-    <ClerkProvider publishableKey={clerkPubKey}>
+    <ClerkProvider
+      publishableKey={clerkPubKey}
+      afterSignInUrl="/Network"
+      afterSignUpUrl="/CompleteYourProfile"
+    >
       <ThemeProvider>
         <BrowserRouter>
           <ScrollManager />

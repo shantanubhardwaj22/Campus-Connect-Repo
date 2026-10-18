@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser, SignOutButton } from "@clerk/clerk-react";
-import axios from "axios";
+import api from "../utils/api";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
 import {
@@ -32,7 +32,6 @@ import { format } from "date-fns";
 import { ModalWindow } from "../components/ModalWindow";
 import { FacultyRoleModal } from "../components/FacultyRoleModal";
 import ConnectionRequestsModal from "../components/ConnectionRequestsModal";
-import { BACKEND_URL } from "../config";
 
 const Account = () => {
   const navigate = useNavigate();
@@ -51,8 +50,8 @@ const Account = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`
+      const response = await api.get(
+        `/api/user/profile/${user.id}`
       );
       setMainUser(response.data);
     } catch (error) {
@@ -63,8 +62,8 @@ const Account = () => {
 
   const handleReject = async (reqId) => {
     try {
-      const response = await axios.patch(
-        `${BACKEND_URL}/api/user/connectionsRejected/${
+      const response = await api.patch(
+        `/api/user/connectionsRejected/${
           mainUser._id
         }`,
         { senderId: reqId }
@@ -78,8 +77,8 @@ const Account = () => {
 
   const handleAccept = async (reqId) => {
     try {
-      const response = await axios.patch(
-        `${BACKEND_URL}/api/user/connectionsAccepted/${
+      const response = await api.patch(
+        `/api/user/connectionsAccepted/${
           mainUser._id
         }`,
         { senderId: reqId }

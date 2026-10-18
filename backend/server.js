@@ -26,20 +26,51 @@ app.set("trust proxy", 1);
 const generalLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 200, // Limit each IP to 100 requests per windowMs
+  skip: (req) => req.method === "OPTIONS",
   message: {
     error: "Too many requests from this IP, please try again later.",
   },
 });
 
+const FRONTEND_URL =
+  process.env.FRONTEND_URL || "https://campus-connect-repo.vercel.app";
+
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://campus-connect-repo.vercel.app",
-
+  "http://127.0.0.1:5173",
+  FRONTEND_URL,
 ];
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  try {
+    const { hostname } = new URL(origin);
+    return (
+      hostname === "campus-connect-repo.vercel.app" ||
+      (hostname.endsWith(".vercel.app") &&
+        hostname.includes("campus-connect-repo"))
+    );
+  } catch {
+    return false;
+  }
+};
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, isAllowedOrigin(origin));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      callback(null, isAllowedOrigin(origin));
+    },
+    credentials: true,
     methods: ["GET", "POST"],
   },
 });
@@ -52,6 +83,8 @@ const webhookLimiter = rateLimit({
     error: "Too many webhook requests, please try again later.",
   },
 });
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(generalLimiter);
 app.post(
   "/api/webhooks",
@@ -128,14 +161,6 @@ app.post(
   }
 );
 app.use(express.json()); // ✅ Use express.json() to parse JSON bodies
-
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
 
 // Apply specific rate limiters to different routes
 app.use("/api/user", userRouter);

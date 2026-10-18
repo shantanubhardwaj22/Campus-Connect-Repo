@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
 import Aside from "./Aside";
-import { AiOutlineMessage } from "react-icons/ai";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 
 const AppLayout = () => {
   const navigate = useNavigate();
@@ -22,25 +19,6 @@ const AppLayout = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const { user } = useUser();
-  
-  useEffect(() => {
-    if (!user) return;
-    
-    const fetchUserProfile = async () => {
-      try {
-        const response = await fetch(
-          `${BACKEND_URL}/api/user/profile/${user.id}`
-        );
-        const userData = await response.json();
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-      }
-    };
-    
-    fetchUserProfile();
-  }, [user]);
-  
   return (
     <div
       className={`flex h-screen transition-colors duration-300 ${

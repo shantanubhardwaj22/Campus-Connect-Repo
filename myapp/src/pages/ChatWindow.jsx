@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../utils/api";
 import dayjs from "dayjs";
 import EmojiPicker from "emoji-picker-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -6,7 +6,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Send, Smile, User, Phone, Video } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import socket from "../utils/socket";
-import { BACKEND_URL } from "../config";
 
 // Theme colors aligned with theme.txt
 const CC_YELLOW = "#ece239";
@@ -124,8 +123,8 @@ const ChatWindow = ({ user, recipient, onMobileBack }) => {
 
   const fetchMessages = async () => {
     try {
-      const res = await axios.get(
-        `${BACKEND_URL}/api/chat/chats/${
+      const res = await api.get(
+        `/api/chat/chats/${
           recipient._id
         }?senderId=${user._id}`
       );
@@ -192,7 +191,7 @@ const ChatWindow = ({ user, recipient, onMobileBack }) => {
     setShouldScroll(true);
 
     try {
-      await axios.post(`${BACKEND_URL}/api/chat/chats`, {
+      await api.post(`/api/chat/chats`, {
         recipientId: recipient._id,
         content: message,
         userId: user._id,

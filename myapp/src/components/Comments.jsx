@@ -1,9 +1,8 @@
-import axios from "axios";
+import api from "../utils/api";
 import { format, parseISO } from "date-fns";
 import { useEffect, useState } from "react";
 import { Heart, MessageCircle, User, Clock } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
-import { BACKEND_URL } from "../config";
 
 function Comments({ postId }) {
   const { user } = useUser();
@@ -13,8 +12,8 @@ function Comments({ postId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(
-          `${BACKEND_URL}/api/post/get-comments/${postId}`
+        const response = await api.get(
+          `/api/post/get-comments/${postId}`
         );
         setComments(response.data.comments);
       } catch (error) {

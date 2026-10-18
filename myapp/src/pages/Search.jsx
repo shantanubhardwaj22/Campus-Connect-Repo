@@ -12,10 +12,9 @@ import {
   Loader2,
   CheckCircle,
 } from "lucide-react";
-import axios from "axios";
+import api from "../utils/api";
 import { useUser } from "@clerk/clerk-react";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 
 const SearchPage = () => {
   const { user } = useUser();
@@ -54,8 +53,8 @@ const SearchPage = () => {
 
     setIsLoading(true);
     try {
-      const res = await axios.get(
-        `${BACKEND_URL}/api/user/searchUser`,
+      const res = await api.get(
+        `/api/user/searchUser`,
         {
           params: {
             query: query,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import PostCard from "../components/PostCard";
-import axios from "axios";
+import api from "../utils/api";
 import { format, parseISO } from "date-fns";
 import ProjectCard from "../components/ProjectCard";
 // import { showToast } from "../components/CustomToast"; // Component not found
@@ -26,7 +26,6 @@ import {
   School,
   User,
 } from "lucide-react";
-import { BACKEND_URL } from "../config";
 
 const Network = () => {
   const { user } = useUser();
@@ -81,8 +80,8 @@ const Network = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`,
+      const response = await api.get(
+        `/api/user/profile/${user.id}`,
       );
       setUserProfile(response.data);
     } catch (error) {
@@ -173,10 +172,8 @@ const Network = () => {
   const fetchPosts = async (pageNum) => {
     try {
       setIsLoading(true);
-      const res = await axios.get(
-        `${
-          BACKEND_URL
-        }/api/post/getAll-post?page=${pageNum}`,
+      const res = await api.get(
+        `/api/post/getAll-post?page=${pageNum}`,
       );
       const newPost = res.data.post;
       if (newPost.length === 0) {
@@ -200,8 +197,8 @@ const Network = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await axios.get(
-        `${BACKEND_URL}/api/project/get-projects`,
+      const res = await api.get(
+        `/api/project/get-projects`,
       );
       const data = res.data;
       setProjects(data);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import ChatWindow from "./ChatWindow";
 import { useUser } from "@clerk/clerk-react";
 import {
@@ -14,7 +14,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ConnectionRequestsModal from "../components/ConnectionRequestsModal";
-import { BACKEND_URL } from "../config";
 
 // Theme colors (from theme.txt)
 const CC_YELLOW = "#ece239";
@@ -130,8 +129,8 @@ const ChatApp = () => {
   const fetchCurrentUser = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${clerkUser.id}`
+      const res = await api.get(
+        `/api/user/profile/${clerkUser.id}`
       );
       setUser(res.data);
       await fetchAllUsers(res.data._id);
@@ -145,10 +144,8 @@ const ChatApp = () => {
 
   const fetchAllUsers = async (currentUserId) => {
     try {
-      const res = await axios.get(
-        `${
-          BACKEND_URL
-        }/api/user/getAllConnections/${currentUserId}`
+      const res = await api.get(
+        `/api/user/getAllConnections/${currentUserId}`
       );
       setUsers(res.data);
     } catch (error) {
@@ -158,10 +155,8 @@ const ChatApp = () => {
 
   const fetchPendingRequestsCount = async (userId) => {
     try {
-      const res = await axios.get(
-        `${
-          BACKEND_URL
-        }/api/user/getPendingConnections/${userId}`
+      const res = await api.get(
+        `/api/user/getPendingConnections/${userId}`
       );
       setPendingCount(res.data.length || 0);
     } catch (error) {

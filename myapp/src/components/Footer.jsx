@@ -8,8 +8,7 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
+import api from "../utils/api";
 
 const Footer = () => {
   const { user } = useUser();
@@ -24,8 +23,8 @@ const Footer = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`
+      const response = await api.get(
+        `/api/user/profile/${user.id}`
       );
       const data = response.data;
       setCurrentUserRole(data?.role);

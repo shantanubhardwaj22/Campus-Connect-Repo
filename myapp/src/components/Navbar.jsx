@@ -2,9 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaComments, FaUser } from "react-icons/fa";
 import Sidebar from "./Sidebar";
-import axios from "axios";
+import api from "../utils/api";
 import { useUser } from "@clerk/clerk-react";
-import { BACKEND_URL } from "../config";
 const Navbar = () => {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -34,8 +33,8 @@ const Navbar = () => {
       return;
     }
     // Perform search logic here, e.g., API call to fetch search results
-    const res = await axios.get(
-      `${BACKEND_URL}/api/user/searchUser`,
+    const res = await api.get(
+      `/api/user/searchUser`,
       {
         params: {
           query: searchQuery,

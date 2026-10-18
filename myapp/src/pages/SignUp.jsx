@@ -128,6 +128,7 @@ export default function SignUpPage() {
                 },
               }}
               signInUrl="/Login"
+              forceRedirectUrl="/CompleteYourProfile"
               additionalFields={[
                 {
                   name: "enrollmentNumber",

@@ -10,10 +10,9 @@ import {
 import { FaSquarePlus } from "react-icons/fa6";
 import { useUser } from "@clerk/clerk-react";
 import { MdManageAccounts } from "react-icons/md";
-import axios from "axios";
+import api from "../utils/api";
 import { toast } from "react-toastify";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 const Aside = () => {
   const [expanded, setExpanded] = useState(null);
   const [screenSize, setScreenSize] = useState("desktop");
@@ -75,8 +74,8 @@ const Aside = () => {
   const fetchUserProfile = useCallback(async () => {
     if (!user) return;
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`
+      const response = await api.get(
+        `/api/user/profile/${user.id}`
       );
       const data = response.data;
       setMainUser(data);

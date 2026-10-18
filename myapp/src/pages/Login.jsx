@@ -98,6 +98,7 @@ export default function Login() {
 
             <SignIn
               signUpUrl="/SignUp"
+              forceRedirectUrl="/Network"
               appearance={{
                 variables: {
                   colorPrimary: "#4790fd",

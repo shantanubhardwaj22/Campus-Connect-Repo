@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { Bell, Check, X, User, Loader2 } from "lucide-react";
 import { ModalWindow } from "./ModalWindow";
-import { BACKEND_URL } from "../config";
 
 const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
   const [requests, setRequests] = useState([]);
@@ -19,10 +18,8 @@ const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${
-          BACKEND_URL
-        }/api/user/getPendingConnections/${userId}`
+      const response = await api.get(
+        `/api/user/getPendingConnections/${userId}`
       );
       setRequests(response.data);
     } catch (error) {
@@ -34,10 +31,8 @@ const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
 
   const handleReject = async (reqId) => {
     try {
-      const response = await axios.patch(
-        `${
-          BACKEND_URL
-        }/api/user/connectionsRejected/${userId}`,
+      const response = await api.patch(
+        `/api/user/connectionsRejected/${userId}`,
         { senderId: reqId }
       );
       setRequests(response.data);
@@ -49,10 +44,8 @@ const ConnectionRequestsModal = ({ isOpen, onClose, userId, navigate }) => {
 
   const handleAccept = async (reqId) => {
     try {
-      const response = await axios.patch(
-        `${
-          BACKEND_URL
-        }/api/user/connectionsAccepted/${userId}`,
+      const response = await api.patch(
+        `/api/user/connectionsAccepted/${userId}`,
         { senderId: reqId }
       );
       setRequests(response.data);

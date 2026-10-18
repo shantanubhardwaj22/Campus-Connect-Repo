@@ -1,5 +1,5 @@
 // PostCard.jsx
-import axios from "axios";
+import api from "../utils/api";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Comments from "./Comments";
@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router";
-import { BACKEND_URL } from "../config";
 
 const PostCard = ({
   avatar,
@@ -53,8 +52,8 @@ const PostCard = ({
     const fetchLikes = async () => {
       if (!currUserId) return;
       try {
-        const response = await axios.get(
-          `${BACKEND_URL}/api/post/like/${postId}`,
+        const response = await api.get(
+          `/api/post/like/${postId}`,
         );
         const likedUsers = response.data.likedByUsers;
         setLikedByCurrentUser(likedUsers.some((user) => user === currUserId));
@@ -70,8 +69,8 @@ const PostCard = ({
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`,
+      const response = await api.get(
+        `/api/user/profile/${user.id}`,
       );
       const data = response.data;
       setCurrUserId(data._id);
@@ -89,10 +88,8 @@ const PostCard = ({
     if (isLiking) return;
     setIsLiking(true);
     try {
-      const response = await axios.patch(
-        `${
-          BACKEND_URL
-        }/api/post/like/${postId}/like-toggle`,
+      const response = await api.patch(
+        `/api/post/like/${postId}/like-toggle`,
         { userId: currUserId },
       );
       setLikes(response.data.post.likes);
@@ -110,17 +107,11 @@ const PostCard = ({
     if (!commentText.trim()) return;
 
     try {
-      const formData = new FormData();
-      formData.append("text", commentText);
-      formData.append("postId", postId);
-      formData.append("userId", currUserId);
-      await axios.post(
-        `${BACKEND_URL}/api/post/create-comment`,
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
-        },
-      );
+      await api.post("/api/post/create-comment", {
+        text: commentText,
+        postId,
+        userId: currUserId,
+      });
       setCommentText("");
       toast.success(`Comment posted successfully!`);
     } catch (e) {

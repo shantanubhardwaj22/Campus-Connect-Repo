@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../utils/api";
 import { format, parseISO } from "date-fns";
 import { useEffect, useState } from "react";
 import {
@@ -10,7 +10,6 @@ import {
   Clock,
   Code,
 } from "lucide-react";
-import { BACKEND_URL } from "../config";
 
 function CommentProject({ projectId }) {
   const [comments, setComments] = useState([]);
@@ -20,10 +19,8 @@ function CommentProject({ projectId }) {
     // Fetch comments when component mounts
     const fetchProjectComments = async () => {
       try {
-        const response = await axios.get(
-          `${
-            BACKEND_URL
-          }/api/project/get-project-comments/${projectId}`
+        const response = await api.get(
+          `/api/project/get-project-comments/${projectId}`
         );
         const fetchedProjectComments = response.data.comments;
         setComments(fetchedProjectComments);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/clerk-react";
 // import { showToast } from "../components/CustomToast"; // Component not found
-import axios from "axios";
+import api from "../utils/api";
 import { useTheme } from "../context/ThemeContext";
 import {
   X,
@@ -21,7 +21,6 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../config";
 
 
 const CompleteYourProfile = () => {
@@ -82,8 +81,8 @@ const CompleteYourProfile = () => {
   const fetchUserProfile = useCallback(async () => {
     if (!user?.id) return;
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`,
+      const response = await api.get(
+        `/api/user/profile/${user.id}`,
       );
       const data = response.data;
       setEnrollmentNumber(data.enrollmentNumber || "");
@@ -141,8 +140,8 @@ const CompleteYourProfile = () => {
       if (idCardPhoto && typeof idCardPhoto !== "string")
         formData.append("idCardPhoto", idCardPhoto);
 
-      await axios.patch(
-        `${BACKEND_URL}/api/user/upload-profile`,
+      await api.patch(
+        `/api/user/upload-profile`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

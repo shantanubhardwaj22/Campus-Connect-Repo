@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../utils/api";
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { FiEdit } from "react-icons/fi";
 import {
@@ -14,7 +14,6 @@ import {
   UserCheck,
   Shield,
 } from "lucide-react";
-import { BACKEND_URL } from "../config";
 
 function FacultyRole() {
   const [collegeId, setCollegeId] = useState("");
@@ -36,8 +35,8 @@ function FacultyRole() {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`
+      const response = await api.get(
+        `/api/user/profile/${user.id}`
       );
       const data = response.data;
       setCollegeId(data?.collegeId);
@@ -62,8 +61,8 @@ function FacultyRole() {
         formData.append("idCardPhoto", idCardPhoto);
       }
 
-      await axios.patch(
-        `${BACKEND_URL}/api/user/upload-profile`,
+      await api.patch(
+        `/api/user/upload-profile`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

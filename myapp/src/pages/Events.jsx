@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import EventCard from "../components/EventCard";
 import { Loader2, X, Calendar, Sparkles } from "lucide-react";
-import axios from "axios";
+import api from "../utils/api";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -44,10 +43,8 @@ const Events = () => {
 
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${
-          BACKEND_URL
-        }/api/admin-post/get-post?page=${currentPage}&category=Event`,
+      const response = await api.get(
+        `/api/admin-post/get-post?page=${currentPage}&category=Event`,
       );
       const newEvents = response.data.post;
 

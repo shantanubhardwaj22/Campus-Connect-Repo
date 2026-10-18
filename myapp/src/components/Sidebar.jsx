@@ -2,8 +2,8 @@ import { SignOutButton } from "@clerk/clerk-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
-import axios from "axios";
-import { showToast } from "../components/CustomToast";
+import api from "../utils/api";
+import { toast } from "react-toastify";
 
 import {
   X,
@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { ModalWindow } from "./ModalWindow";
-import { BACKEND_URL } from "../config";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -36,8 +35,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`
+      const response = await api.get(
+        `/api/user/profile/${user.id}`
       );
       const data = response.data;
       setMainUser(data);
@@ -49,8 +48,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const handleReject = async (reqId) => {
     try {
-      const response = await axios.patch(
-        `${BACKEND_URL}/api/user/connectionsRejected/${
+      const response = await api.patch(
+        `/api/user/connectionsRejected/${
           mainUser._id
         }`,
         { senderId: reqId }
@@ -66,8 +65,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const handleAccept = async (reqId) => {
     try {
-      const response = await axios.patch(
-        `${BACKEND_URL}/api/user/connectionsAccepted/${
+      const response = await api.patch(
+        `/api/user/connectionsAccepted/${
           mainUser._id
         }`,
         { senderId: reqId }
@@ -83,8 +82,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const handleClick = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/getPendingConnections/${
+      const response = await api.get(
+        `/api/user/getPendingConnections/${
           mainUser._id
         }`
       );

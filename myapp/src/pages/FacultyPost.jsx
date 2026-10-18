@@ -15,9 +15,8 @@ import {
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { useUser } from "@clerk/clerk-react";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import api from "../utils/api";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 
 const FacultyPost = () => {
   const navigate = useNavigate();
@@ -49,8 +48,8 @@ const FacultyPost = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`,
+      const response = await api.get(
+        `/api/user/profile/${user.id}`,
       );
       const data = response.data;
       const form = new FormData();
@@ -67,8 +66,8 @@ const FacultyPost = () => {
         form.append("image", formData.file);
       }
 
-      await axios.post(
-        `${BACKEND_URL}/api/admin-post/create-post`,
+      await api.post(
+        `/api/admin-post/create-post`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -16,11 +16,10 @@ import {
   Briefcase,
   Sparkles,
 } from "lucide-react";
-import axios from "axios";
+import api from "../utils/api";
 // import { showToast } from "../components/CustomToast"; // Component not found
 import { useUser } from "@clerk/clerk-react";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 
 const PostPage = () => {
   const { user } = useUser();
@@ -110,8 +109,8 @@ const PostPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`,
+      const response = await api.get(
+        `/api/user/profile/${user.id}`,
       );
 
       const data = response.data;
@@ -120,8 +119,8 @@ const PostPage = () => {
       form.append("file", formData.file);
       form.append("author", data._id);
 
-      await axios.post(
-        `${BACKEND_URL}/api/post/create-post`,
+      await api.post(
+        `/api/post/create-post`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },

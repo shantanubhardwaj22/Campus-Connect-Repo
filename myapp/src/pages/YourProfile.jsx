@@ -1,11 +1,10 @@
 import { useUser } from "@clerk/clerk-react";
-import axios from "axios";
+import api from "../utils/api";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { ArrowLeft } from "lucide-react";
-import { BACKEND_URL } from "../config";
 
 const UserProfile = () => {
   const { user } = useUser();
@@ -55,8 +54,8 @@ const UserProfile = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${user.id}`
+      const response = await api.get(
+        `/api/user/profile/${user.id}`
       );
       const data = response.data;
       setUser2(data);
@@ -92,8 +91,8 @@ const UserProfile = () => {
         formData.append("skills", JSON.stringify(tempUser.skills));
 
       // Make API call
-      await axios.patch(
-        `${BACKEND_URL}/api/user/upload-profile`,
+      await api.patch(
+        `/api/user/upload-profile`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -18,12 +18,11 @@ import {
   Code,
   Globe,
 } from "lucide-react";
-import axios from "axios";
+import api from "../utils/api";
 import { toast } from "react-toastify";
 import { useUser } from "@clerk/clerk-react";
 import CommentProject from "./CommentProject";
 import { useNavigate } from "react-router";
-import { BACKEND_URL } from "../config";
 
 const ProjectCard = ({
   avatar,
@@ -65,8 +64,8 @@ const ProjectCard = ({
 
   const fetchLikes = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/project/like/${projectId}`
+      const response = await api.get(
+        `/api/project/like/${projectId}`
       );
       const likedUsers = response.data.likes;
       setLikedByCurrentUser(
@@ -79,8 +78,8 @@ const ProjectCard = ({
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(
-        `${BACKEND_URL}/api/user/profile/${clerkUser.id}`
+      const response = await api.get(
+        `/api/user/profile/${clerkUser.id}`
       );
       setUser(response.data);
     } catch (error) {
@@ -95,8 +94,8 @@ const ProjectCard = ({
     const newLikedState = !likedByCurrentUser;
     setLikesCount((prev) => prev + (newLikedState ? 1 : -1));
     try {
-      const response = await axios.patch(
-        `${BACKEND_URL}/api/project/like/${projectId}`,
+      const response = await api.patch(
+        `/api/project/like/${projectId}`,
         {
           userId: user?._id,
         }
@@ -120,17 +119,11 @@ const ProjectCard = ({
     if (!commentText.trim()) return;
 
     try {
-      const formData = new FormData();
-      formData.append("text", commentText);
-      formData.append("projectId", projectId);
-      formData.append("userId", user?._id);
-      await axios.post(
-        `${BACKEND_URL}/api/project/create-project-comment`,
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      await api.post("/api/project/create-project-comment", {
+        text: commentText,
+        projectId,
+        userId: user?._id,
+      });
       setCommentText("");
       toast.success(`Comment posted successfully!`);
     } catch (e) {

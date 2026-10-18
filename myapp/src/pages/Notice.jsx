@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import NoticeCard from "../components/NoticeCard";
-import axios from "axios";
+import api from "../utils/api";
 import { format, parseISO } from "date-fns";
 import { Bell, Loader2 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import { BACKEND_URL } from "../config";
 
 const Notice = () => {
   const [notices, setNotices] = useState([]);
@@ -21,10 +20,8 @@ const Notice = () => {
   const fetchPosts = async (pageNum) => {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `${
-          BACKEND_URL
-        }/api/admin-post/get-post?page=${pageNum}&category=Notice`,
+      const res = await api.get(
+        `/api/admin-post/get-post?page=${pageNum}&category=Notice`,
       );
       const newPost = res.data.post;
 
